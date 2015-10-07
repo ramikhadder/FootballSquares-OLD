@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
     <EditText
         android:id="@+id/nameInput"
-        android:padding="2dp"
+        android:padding="4dp"
         android:textSize="32sp"
         android:hint="Enter participant names"
         android:layout_width="match_parent"
@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <ListView
+        android:padding="4dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listview"

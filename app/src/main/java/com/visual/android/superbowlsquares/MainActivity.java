@@ -66,6 +66,9 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent iiii = new Intent(this, BoardInput.class);
+        startActivity(iiii);
+
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);

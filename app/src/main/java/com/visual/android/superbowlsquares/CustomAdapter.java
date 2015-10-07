@@ -16,12 +16,12 @@ import java.util.ArrayList;
  * Created by Rami on 10/5/2015.
  */
 public class CustomAdapter extends ArrayAdapter<Names>{
-    Context context;
-    int layoutResourceId;
-    Names data[] = null;
 
-    public CustomAdapter (Context context, ArrayList<Names> namez){
-        super(context, 0, namez);
+    private ArrayList<Names> items;
+
+    public CustomAdapter (Context context, ArrayList<Names> items){
+        super(context, 0, items);
+        this.items = items;
     }
 
     @Override
@@ -31,12 +31,25 @@ public class CustomAdapter extends ArrayAdapter<Names>{
         if(convertView == null)
         {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_namechoices, parent, false);
+
         }
-
-        TextView tv = (TextView)convertView.findViewById(R.id.nameTest);
+        Names nm = items.get(position);
+        if (nm != null){
+            final TextView tv = (TextView)convertView.findViewById(R.id.nameItem);
+            tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    tv.setText("CLICKED");
+                }
+            });
+        }
+        TextView tv = (TextView)convertView.findViewById(R.id.nameItem);
         tv.setText(names.name);
-
         return convertView;
     }
+    /*@Override
+    public void onClick(View v){
+        tv.setText("CLICKED");
+    }*/
 
 }

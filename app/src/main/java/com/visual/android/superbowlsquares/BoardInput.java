@@ -20,6 +20,8 @@ public class BoardInput extends Activity {
     private Button mConfirm;
     private List<String> names = new ArrayList<>();
     private ArrayList<Names> arrayOfNames = new ArrayList<Names>();
+    private CustomAdapter adapter;
+    private ListView listview;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,19 +29,21 @@ public class BoardInput extends Activity {
 
         setContentView(R.layout.activity_boardinput);
         mUserInput = (EditText) findViewById(R.id.nameInput);
+        mConfirm = (Button) findViewById(R.id.confirm);
         mConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //names.add(mUserInput.getText().toString());
                 arrayOfNames.add(new Names(mUserInput.getText().toString()));
                 mUserInput.setText("");
+                adapter = new CustomAdapter(BoardInput.this, arrayOfNames);
+                listview = (ListView) findViewById(R.id.listview);
+                listview.setAdapter(adapter);
             }
         });
-        arrayOfNames.add(new Names("TEST1"));
-        arrayOfNames.add(new Names("TEST2"));
-        arrayOfNames.add(new Names("TEST3"));
-        CustomAdapter adapter = new CustomAdapter(this, arrayOfNames);
-        ListView listview = (ListView) findViewById(R.id.listview);
-        listview.setAdapter(adapter);
+        //arrayOfNames.add(new Names("TEST1"));
+        //arrayOfNames.add(new Names("TEST2"));
+        //arrayOfNames.add(new Names("TEST3"));
+
     }
 }
