@@ -22,12 +22,5 @@
             android:layout_height="wrap_content"
             android:id="@+id/listview">
         </ListView>
-    <Button
-        android:layout_gravity="bottom"
-        android:textSize="32sp"
-        android:id="@+id/ready"
-        android:text="Ready"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>

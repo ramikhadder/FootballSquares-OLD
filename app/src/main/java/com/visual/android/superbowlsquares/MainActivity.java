@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -61,8 +62,10 @@ public class MainActivity extends Activity {
 
     private Random rand, rando;
 
-    private Intent a;
-    private Intent b;
+    private EditText mUserInput;
+    private Button mConfirm;
+    private Button mReady;
+    private String selectedName;
 
     private String webSourceCode, x, y, teamNameOne, teamNameTwo, checkBoxResult;
     private int int1, int2, int3, int4, x1, y1;
@@ -74,54 +77,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-        View welcomeLayout = inflater.inflate(R.layout.activity_checkbox, null);
-        checkBox = (CheckBox)welcomeLayout.findViewById(R.id.dontShow);
-        alertDialogBuilder.setView(welcomeLayout);
-        alertDialogBuilder.setTitle("Welcome to Football Squares!");
-        alertDialogBuilder.setMessage("Click the button to display the teams and their respective axis.\nLong press the button " +
-                "to reset the table and generate new axis numbers.");
-        checkBoxResult = "NOT checked";
-        alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                if (checkBox.isChecked()){
-                    Log.d("Check", "is checked");
-                    checkBoxResult = "checked";
-                    SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-                    SharedPreferences.Editor editor = settings.edit();
-                    editor.putString("skipMessage", checkBoxResult);
-                    // Commit the edits!
-                    editor.commit();
-
-                }
-                System.out.println("WORKING");
-            }
-        });
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        String skipMessage = settings.getString("skipMessage", "NOT checked");
-        if (!skipMessage.equalsIgnoreCase("checked")) {
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
-        }
-        layout = (TableLayout) findViewById(R.id.table);
-        for (int i = 0; i < 11; i++){
-            Rows[i] = (TableRow)layout.getChildAt(i);
-        }
-
-        //sets the ints of the arrays equal to each respective child
-        for (int i = 0; i < 10; i++){
-            Row_One_Column[i] = (TextView)Rows[0].getChildAt(i + 1);
-            Column_One_Row[i] = (TextView)Rows[i+1].getChildAt(0);
-            for (int y = 0; y < 10; y++) {
-                Row_EDs[i][y] = (TextView) Rows[i+1].getChildAt(y+1);
-            }
-            //creates two list arrays using numbers 0-9
-            list.add(i);
-            list2.add(i);
-        }
+        initializeInfo();
 
         //create a handler in an activity or fragment
         Handler handler = new Handler();
@@ -132,36 +88,23 @@ public class MainActivity extends Activity {
 
         //shuffles the two arrays
         shuffleNumbers();
+
         //sets the shuffled numbers in the rows and columns
         setNumbers();
+
         for (int i = 0; i < 10; i++){
             for (int y = 0; y < 10; y++) {
                 Row_EDs[i][y].setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
-                        adapter = bi.getAdapter();
+                        //adapter = new CustomAdapter(MainActivity.this, arrayOfNames);
                         v.setBackgroundColor(Color.WHITE);
                         TextView t = (TextView) v;
-                        if (adapter.getSelectedName().isEmpty()){
-                            Log.d("NULL","NULL");
-                        }
-                        else{
-                            t.setText(adapter.getSelectedName());
-                        }
+                        t.setText(selectedName);
                     }
                 });
             }
         }
-        /*Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.planets_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new CustomOnItemSelectedListener());
-        */
         mReset = (Button)findViewById(R.id.reset);
         mReset.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,25 +118,13 @@ public class MainActivity extends Activity {
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
-                        Log.d("SWAG", "YOLO");
-                       if (item.getTitle().equals("One")){
-                           Log.d("MADE IT", "SUCCESS");
-                           String names[] ={"A","B","C","D"};
-                           AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-                           LayoutInflater inflater = getLayoutInflater();
-                           View listviewLayout = inflater.inflate(R.layout.activity_boardinput, null);
-                           alertDialogBuilder.setTitle("Board Set-up");
-                           ListView lv = (ListView) listviewLayout.findViewById(R.id.listview);
-                           alertDialogBuilder.setView(listviewLayout);
-                           ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_list_item_1,names);
-                           lv.setAdapter(adapter);
-                           alertDialogBuilder.show();
+                       if (item.getTitle().equals("Board Setup")){
+                            setUpBoard();
                        }
                        if (item.getTitle().equals("Two")){
-                           Intent i = new Intent(MainActivity.this, BoardInput.class);
-                           startActivity(i);
+                           Toast.makeText(MainActivity.this, "Does nothing yet", Toast.LENGTH_SHORT).show();
                        }
-                       if (item.getTitle().equals("Three")){
+                       if (item.getTitle().equals("Show Team Positions")){
                            if (teamNameOne == null && teamNameTwo == null){
                                Toast.makeText(getApplicationContext(), "No games found in the current week.",
                                        Toast.LENGTH_LONG).show();
@@ -202,6 +133,13 @@ public class MainActivity extends Activity {
                                Toast.makeText(getApplicationContext(), teamNameOne + " (Row) vs. " + teamNameTwo + " (Column)",
                                        Toast.LENGTH_LONG).show();
                            }
+                       }
+                       if (item.getTitle().equals("Reset Table")){
+                           clearBoard();
+                           resetWinner();
+                           shuffleNumbers();
+                           setNumbers();
+                           new MyAsyncTask().execute();
                        }
                         return true;
                     }
@@ -213,11 +151,7 @@ public class MainActivity extends Activity {
         mReset.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                clearBoard();
-                resetWinner();
-                shuffleNumbers();
-                setNumbers();
-                new MyAsyncTask().execute();
+
                 return true;
             }
         });
@@ -257,6 +191,24 @@ public class MainActivity extends Activity {
         Collections.shuffle(list2);
         for (int a = 0; a < 10; a++){
             mNumberColumns[a] = list2.get(a);
+        }
+    }
+    private void initializeInfo(){
+        layout = (TableLayout) findViewById(R.id.table);
+        for (int i = 0; i < 11; i++){
+            Rows[i] = (TableRow)layout.getChildAt(i);
+        }
+
+        //sets the ints of the arrays equal to each respective child
+        for (int i = 0; i < 10; i++){
+            Row_One_Column[i] = (TextView)Rows[0].getChildAt(i + 1);
+            Column_One_Row[i] = (TextView)Rows[i+1].getChildAt(0);
+            for (int y = 0; y < 10; y++) {
+                Row_EDs[i][y] = (TextView) Rows[i+1].getChildAt(y+1);
+            }
+            //creates two list arrays using numbers 0-9
+            list.add(i);
+            list2.add(i);
         }
     }
     private void testUpdateScore(){
@@ -413,5 +365,84 @@ public class MainActivity extends Activity {
             });
         }
 
+    }
+    private void setUpBoard(){
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+        final AlertDialog OptionDialog = new AlertDialog.Builder(MainActivity.this).create();
+        final AlertDialog x = alertDialogBuilder.create();
+        LayoutInflater inflater = getLayoutInflater();
+        View listviewLayout = inflater.inflate(R.layout.activity_boardinput, null);
+        alertDialogBuilder.setTitle("Board Set-up");
+        final ListView lv = (ListView) listviewLayout.findViewById(R.id.listview);
+        alertDialogBuilder.setView(listviewLayout);
+        adapter = new CustomAdapter(MainActivity.this, arrayOfNames);
+        lv.setAdapter(adapter);
+        alertDialogBuilder.setNegativeButton("Ready", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface d, int arg1) {
+                if (adapter.getSelectedName().isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please select a name.", Toast.LENGTH_LONG).show();
+                } else {
+                    selectedName = adapter.getSelectedName();
+                    d.cancel();
+                }
+            }
+
+            ;
+        });
+        mUserInput = (EditText) listviewLayout.findViewById(R.id.nameInput);
+        mConfirm = (Button) listviewLayout.findViewById(R.id.confirm);
+        mConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //names.add(mUserInput.getText().toString());
+                if (mUserInput.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "Please enter a name.",
+                            Toast.LENGTH_SHORT).show();
+
+                } else {
+                    arrayOfNames.add(new Names(mUserInput.getText().toString()));
+                    mUserInput.setText("");
+                    lv.setAdapter(adapter);
+                }
+
+            }
+        });
+        Button nButton = x.getButton(DialogInterface.BUTTON_NEGATIVE);
+        //nButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 32);
+        //nButton.setBackgroundColor(Color.GRAY);
+        alertDialogBuilder.show();
+    }
+    private void welcomeDialog(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+        View welcomeLayout = inflater.inflate(R.layout.activity_checkbox, null);
+        checkBox = (CheckBox)welcomeLayout.findViewById(R.id.dontShow);
+        alertDialogBuilder.setView(welcomeLayout);
+        alertDialogBuilder.setTitle("Welcome to Football Squares!");
+        alertDialogBuilder.setMessage("Click the button to display the teams and their respective axis.\nLong press the button " +
+                "to reset the table and generate new axis numbers.");
+        checkBoxResult = "NOT checked";
+        alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (checkBox.isChecked()){
+                    Log.d("Check", "is checked");
+                    checkBoxResult = "checked";
+                    SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("skipMessage", checkBoxResult);
+                    // Commit the edits!
+                    editor.commit();
+
+                }
+                System.out.println("WORKING");
+            }
+        });
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        String skipMessage = settings.getString("skipMessage", "NOT checked");
+        if (!skipMessage.equalsIgnoreCase("checked")) {
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
     }
 }

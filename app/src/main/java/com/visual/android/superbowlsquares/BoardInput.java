@@ -54,7 +54,7 @@ public class BoardInput extends Activity {
 
             }
         });
-        mReady = (Button) findViewById(R.id.ready);
+        //mReady = (Button) findViewById(R.id.ready);
         mReady.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

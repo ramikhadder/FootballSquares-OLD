@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/one"
-        android:title="One"/>
+        android:title="Board Setup"/>
 
     <item
         android:id="@+id/two"
@@ -10,5 +10,9 @@
 
     <item
         android:id="@+id/three"
-        android:title="Three"/>
+        android:title="Show Team Positions"/>
+
+    <item
+        android:id="@+id/four"
+        android:title="Reset Table"/>
 </menu>
