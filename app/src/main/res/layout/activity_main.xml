@@ -94,7 +94,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -105,7 +105,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -116,7 +116,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -127,7 +127,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -138,7 +138,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -149,7 +149,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -160,7 +160,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -171,7 +171,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -182,7 +182,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -193,7 +193,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -213,7 +213,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -224,7 +224,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -235,7 +235,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -246,7 +246,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -257,7 +257,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -268,7 +268,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -279,7 +279,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -290,7 +290,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -301,7 +301,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -312,7 +312,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -332,7 +332,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -343,7 +343,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -354,7 +354,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -365,7 +365,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -376,7 +376,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -387,7 +387,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -398,7 +398,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -409,7 +409,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -420,7 +420,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -431,7 +431,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -451,7 +451,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -462,7 +462,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -473,7 +473,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -484,7 +484,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -495,7 +495,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -506,7 +506,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -517,7 +517,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -528,7 +528,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -539,7 +539,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -550,7 +550,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -570,7 +570,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -581,7 +581,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -592,7 +592,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -603,7 +603,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -614,7 +614,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -625,7 +625,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -636,7 +636,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -647,7 +647,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -658,7 +658,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -669,7 +669,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -689,7 +689,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -700,7 +700,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -711,7 +711,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -722,7 +722,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -733,7 +733,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -744,7 +744,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -755,7 +755,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -766,7 +766,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -777,7 +777,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -788,7 +788,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -808,7 +808,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -819,7 +819,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -830,7 +830,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -841,7 +841,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -852,7 +852,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -863,7 +863,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -874,7 +874,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -885,7 +885,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -896,7 +896,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -907,7 +907,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -927,7 +927,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -938,7 +938,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -949,7 +949,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -960,7 +960,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -971,7 +971,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -982,7 +982,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -993,7 +993,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1004,7 +1004,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1015,7 +1015,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1026,7 +1026,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1046,7 +1046,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1057,7 +1057,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1068,7 +1068,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1079,7 +1079,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1090,7 +1090,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1101,7 +1101,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1112,7 +1112,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1123,7 +1123,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1134,7 +1134,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1145,7 +1145,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1165,7 +1165,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1176,7 +1176,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1187,7 +1187,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1198,7 +1198,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1209,7 +1209,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1220,7 +1220,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1231,7 +1231,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1242,7 +1242,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1253,7 +1253,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
@@ -1264,7 +1264,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             />
-        <EditText
+        <TextView
             android:paddingLeft="2dp"
             android:paddingTop="22dp"
             android:paddingBottom="22dp"

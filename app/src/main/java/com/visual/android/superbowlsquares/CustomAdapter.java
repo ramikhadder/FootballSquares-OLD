@@ -3,11 +3,13 @@ package com.visual.android.superbowlsquares;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -18,6 +20,8 @@ import java.util.ArrayList;
 public class CustomAdapter extends ArrayAdapter<Names>{
 
     private ArrayList<Names> items;
+    private TextView tvHolder;
+    private String selectedName = "";
 
     public CustomAdapter (Context context, ArrayList<Names> items){
         super(context, 0, items);
@@ -27,7 +31,6 @@ public class CustomAdapter extends ArrayAdapter<Names>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Names names = getItem(position);
-
         if(convertView == null)
         {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_namechoices, parent, false);
@@ -39,7 +42,18 @@ public class CustomAdapter extends ArrayAdapter<Names>{
             tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    tv.setText("CLICKED");
+                    if (tvHolder != null) {
+                        tvHolder.setBackgroundColor(Color.WHITE);
+                        v.setBackgroundColor(Color.RED);
+                        tvHolder = tv;
+                        selectedName = tv.getText().toString();
+                        System.out.println(selectedName);
+                    } else {
+                        v.setBackgroundColor(Color.RED);
+                        tvHolder = tv;
+                        selectedName = tv.getText().toString();
+                        System.out.println(selectedName);
+                    }
                 }
             });
         }
@@ -47,9 +61,8 @@ public class CustomAdapter extends ArrayAdapter<Names>{
         tv.setText(names.name);
         return convertView;
     }
-    /*@Override
-    public void onClick(View v){
-        tv.setText("CLICKED");
-    }*/
 
+    public String getSelectedName(){
+        return selectedName;
+    }
 }

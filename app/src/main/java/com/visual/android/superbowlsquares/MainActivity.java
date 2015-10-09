@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
 import java.util.TimerTask;
 import android.os.Handler;
 import android.widget.Toast;
@@ -48,14 +49,20 @@ public class MainActivity extends Activity {
 
     TextView[] Row_One_Column = new TextView[10];
     TextView[] Column_One_Row = new TextView[10];
-    EditText[][] Row_EDs = new EditText[10][10];
+    TextView[][] Row_EDs = new TextView[10][10];
     TableRow[] Rows = new TableRow[11];
     int[] mNumberRows = new int[10];
     int[] mNumberColumns = new int[10];
     String[] spinner = new String[3];
+    private ArrayList<Names> arrayOfNames = new ArrayList<Names>();
 
+    private CustomAdapter adapter;
+    private BoardInput bi;
 
     private Random rand, rando;
+
+    private Intent a;
+    private Intent b;
 
     private String webSourceCode, x, y, teamNameOne, teamNameTwo, checkBoxResult;
     private int int1, int2, int3, int4, x1, y1;
@@ -66,8 +73,7 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent iiii = new Intent(this, BoardInput.class);
-        startActivity(iiii);
+
 
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -110,7 +116,7 @@ public class MainActivity extends Activity {
             Row_One_Column[i] = (TextView)Rows[0].getChildAt(i + 1);
             Column_One_Row[i] = (TextView)Rows[i+1].getChildAt(0);
             for (int y = 0; y < 10; y++) {
-                Row_EDs[i][y] = (EditText) Rows[i+1].getChildAt(y+1);
+                Row_EDs[i][y] = (TextView) Rows[i+1].getChildAt(y+1);
             }
             //creates two list arrays using numbers 0-9
             list.add(i);
@@ -122,7 +128,7 @@ public class MainActivity extends Activity {
         //create a timer task and pass the handler in
         CustomTimerTask task = new CustomTimerTask(handler);
         //use timer to run the task every 10 seconds
-        //new Timer().scheduleAtFixedRate(task, 0, 30000);
+        new Timer().scheduleAtFixedRate(task, 0, 30000);
 
         //shuffles the two arrays
         shuffleNumbers();
@@ -133,7 +139,15 @@ public class MainActivity extends Activity {
                 Row_EDs[i][y].setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
+                        adapter = bi.getAdapter();
                         v.setBackgroundColor(Color.WHITE);
+                        TextView t = (TextView) v;
+                        if (adapter.getSelectedName().isEmpty()){
+                            Log.d("NULL","NULL");
+                        }
+                        else{
+                            t.setText(adapter.getSelectedName());
+                        }
                     }
                 });
             }
@@ -152,14 +166,6 @@ public class MainActivity extends Activity {
         mReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (teamNameOne == null && teamNameTwo == null){
-                    Toast.makeText(getApplicationContext(), "No games found in the current week.",
-                            Toast.LENGTH_LONG).show();
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), teamNameOne + " (Row) vs. " + teamNameTwo + " (Column)",
-                            Toast.LENGTH_LONG).show();
-                }
                 //Creating the instance of PopupMenu
                 PopupMenu popup = new PopupMenu(MainActivity.this, mReset);
                 //Inflating the Popup using xml file
@@ -186,6 +192,16 @@ public class MainActivity extends Activity {
                        if (item.getTitle().equals("Two")){
                            Intent i = new Intent(MainActivity.this, BoardInput.class);
                            startActivity(i);
+                       }
+                       if (item.getTitle().equals("Three")){
+                           if (teamNameOne == null && teamNameTwo == null){
+                               Toast.makeText(getApplicationContext(), "No games found in the current week.",
+                                       Toast.LENGTH_LONG).show();
+                           }
+                           else {
+                               Toast.makeText(getApplicationContext(), teamNameOne + " (Row) vs. " + teamNameTwo + " (Column)",
+                                       Toast.LENGTH_LONG).show();
+                           }
                        }
                         return true;
                     }
@@ -370,7 +386,8 @@ public class MainActivity extends Activity {
                 clearOldWinner();
                 showWinner();
             }
-            new MyAsyncTask().execute();
+            //recursion
+            //new MyAsyncTask().execute();
             //placeholders for the score before they change
             S1PlaceHolder = ScoreOne;
             S2PlaceHolder = ScoreTwo;
