@@ -24,19 +24,34 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import android.os.Handler;
 import android.widget.Toast;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+
+import retrofit.http.HTTP;
 
 public class MainActivity extends Activity {
 
@@ -55,8 +70,10 @@ public class MainActivity extends Activity {
     int[] mNumberRows = new int[10];
     int[] mNumberColumns = new int[10];
     String[] spinner = new String[3];
-    private ArrayList<Names> arrayOfNames = new ArrayList<Names>();
 
+    private ArrayList<Names> arrayOfNames = new ArrayList<Names>();
+    private ArrayList<TeamNames> arrayOfTeams = new ArrayList<>();
+    private TeamSelectionAdapter teamSelectionAdapter;
     private CustomAdapter adapter;
     private BoardInput bi;
 
@@ -65,18 +82,23 @@ public class MainActivity extends Activity {
     private EditText mUserInput;
     private Button mConfirm;
     private Button mReady;
-    private String selectedName;
+    private String selectedName, updateWSC, teamSelectedName;
 
     private String webSourceCode, x, y, teamNameOne, teamNameTwo, checkBoxResult;
-    private int int1, int2, int3, int4, x1, y1;
+    private int int1, int2, int3, int4, x1, y1, keyword1, keyword2;
     private CheckBox checkBox;
     private static final String PREFS_NAME = "MyPrefsFile1";
 
+    private int count = 0;
+    private int webSourceCodeNum = 0;
+
+    private Boolean checkTeams = true;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //dfor (int i = 0; i < 3; i++){ arrayOfNames.add(new Names(""));}
         initializeInfo();
 
         //create a handler in an activity or fragment
@@ -84,7 +106,8 @@ public class MainActivity extends Activity {
         //create a timer task and pass the handler in
         CustomTimerTask task = new CustomTimerTask(handler);
         //use timer to run the task every 10 seconds
-        new Timer().scheduleAtFixedRate(task, 0, 30000);
+        //new Timer().scheduleAtFixedRate(task, 0, 30000);
+        new MyAsyncTask().execute();
 
         //shuffles the two arrays
         shuffleNumbers();
@@ -121,7 +144,8 @@ public class MainActivity extends Activity {
                        if (item.getTitle().equals("Board Setup")){
                             setUpBoard();
                        }
-                       if (item.getTitle().equals("Two")){
+                       if (item.getTitle().equals("Select Team")){
+                           showTeams();
                            Toast.makeText(MainActivity.this, "Does nothing yet", Toast.LENGTH_SHORT).show();
                        }
                        if (item.getTitle().equals("Show Team Positions")){
@@ -134,12 +158,11 @@ public class MainActivity extends Activity {
                                        Toast.LENGTH_LONG).show();
                            }
                        }
-                       if (item.getTitle().equals("Reset Table")){
+                       if (item.getTitle().equals("Reset Board")){
                            clearBoard();
                            resetWinner();
                            shuffleNumbers();
                            setNumbers();
-                           new MyAsyncTask().execute();
                        }
                         return true;
                     }
@@ -232,7 +255,7 @@ public class MainActivity extends Activity {
         protected List<Integer> doInBackground(Void... params) {
             StringBuilder sb = new StringBuilder();
             try {
-                URL nfl = new URL("http://www.cbssports.com/nfl/scoreboard");
+                URL nfl = new URL("http://www.cbssports.com/nfl/scoreboard?nocache="+new Date().getTime());
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(
                                 nfl.openStream()));
@@ -252,12 +275,45 @@ public class MainActivity extends Activity {
             webSourceCode = sb.toString();
             List<Integer> scores = new ArrayList<Integer>();
             //Keywords for score
-            String str = "<td class=\"finalScore\">";
+            String str1 = "<td class=\"finalScore\">";
             String str2 = "</td></tr><tr class=\"teamInfo homeTeam\">";
             String str3 = "</td></tr></table></span>";
             String str4 = "</td><td class=\"teamLabel\">";
+            String str5 = "class=\"scoreBox spanCol2\">";
+            String str6 = "<table width=\"100%\" class=\"gameLeaders\">";
+
+            keyword1 = webSourceCode.indexOf(str5)+str5.length();
+            keyword2 = webSourceCode.indexOf(str6);
+            String updateWSC = webSourceCode;
+            ///int d = 0;
+            while (checkTeams = true){
+                Log.d("keyword1", String.valueOf(keyword1-str5.length()));
+                Log.d("keyword2", String.valueOf(keyword2));
+                if ((keyword1-str5.length() != -1 && keyword2 != -1) && (keyword2 > keyword1)){
+                    Log.d("Accepted", "keywords");
+                    arrayOfTeams.add(new TeamNames(updateWSC.substring(keyword1,keyword2)));
+                    updateWSC = webSourceCode.substring(keyword2);
+                    keyword1 = updateWSC.indexOf(str5)+str5.length();
+                    keyword2 = updateWSC.indexOf(str6);
+                    //d++;
+                }
+                /*else{
+                    if (d == 0) {
+                        Log.d("Denied", "keywords");
+                        arrayOfTeams.clear();
+                        updateWSC = webSourceCode;
+                        keyword1 = webSourceCode.indexOf(str5) + str5.length();
+                        keyword2 = webSourceCode.indexOf(str6);
+                        break;
+                    }
+                }
+                break;*/
+            }
+            if (!arrayOfTeams.isEmpty()){
+                webSourceCode = arrayOfTeams.get(webSourceCodeNum).toString();
+            }
             //location of scores
-            int1 = webSourceCode.indexOf(str)+str.length();
+            int1 = webSourceCode.indexOf(str1)+str1.length();
             int2 = webSourceCode.indexOf(str2);
             int3 = webSourceCode.indexOf(str4)+str4.length();
             //String x is the first team's score
@@ -298,7 +354,7 @@ public class MainActivity extends Activity {
             webSourceCode = webSourceCode.substring(int2);
 
             //relocation of scores
-            int1 = webSourceCode.indexOf(str)+str.length();
+            int1 = webSourceCode.indexOf(str1)+str1.length();
             int2 = webSourceCode.indexOf(str3);
             //String y is the second team's score
             y = webSourceCode.substring(int1, int2);
@@ -338,8 +394,17 @@ public class MainActivity extends Activity {
                 clearOldWinner();
                 showWinner();
             }
+            try {
+                Thread.sleep(5000);
+            }
+            catch (InterruptedException e){
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             //recursion
-            //new MyAsyncTask().execute();
+            count++;
+            Log.d("Recursion",String.valueOf(count));
+            new MyAsyncTask().execute();
             //placeholders for the score before they change
             S1PlaceHolder = ScoreOne;
             S2PlaceHolder = ScoreTwo;
@@ -357,7 +422,7 @@ public class MainActivity extends Activity {
             handler.post(new Runnable() {
                 public void run() {
                     //executes the task every 10 seconds
-                    new MyAsyncTask().execute();
+                    //new MyAsyncTask().execute();
                     //placeholders for the score before they change
                     S1PlaceHolder = ScoreOne;
                     S2PlaceHolder = ScoreTwo;
@@ -368,30 +433,17 @@ public class MainActivity extends Activity {
     }
     private void setUpBoard(){
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-        final AlertDialog OptionDialog = new AlertDialog.Builder(MainActivity.this).create();
-        final AlertDialog x = alertDialogBuilder.create();
+        final AlertDialog dialog = alertDialogBuilder.create();
         LayoutInflater inflater = getLayoutInflater();
         View listviewLayout = inflater.inflate(R.layout.activity_boardinput, null);
-        alertDialogBuilder.setTitle("Board Set-up");
+        dialog.setTitle("Board Set-up");
         final ListView lv = (ListView) listviewLayout.findViewById(R.id.listview);
-        alertDialogBuilder.setView(listviewLayout);
+        dialog.setView(listviewLayout);
+
         adapter = new CustomAdapter(MainActivity.this, arrayOfNames);
         lv.setAdapter(adapter);
-        alertDialogBuilder.setNegativeButton("Ready", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface d, int arg1) {
-                if (adapter.getSelectedName().isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Please select a name.", Toast.LENGTH_LONG).show();
-                } else {
-                    selectedName = adapter.getSelectedName();
-                    d.cancel();
-                }
-            }
-
-            ;
-        });
         mUserInput = (EditText) listviewLayout.findViewById(R.id.nameInput);
-        mConfirm = (Button) listviewLayout.findViewById(R.id.confirm);
+        Button mConfirm = (Button) listviewLayout.findViewById(R.id.addButton);
         mConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -408,10 +460,46 @@ public class MainActivity extends Activity {
 
             }
         });
-        Button nButton = x.getButton(DialogInterface.BUTTON_NEGATIVE);
-        //nButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 32);
-        //nButton.setBackgroundColor(Color.GRAY);
-        alertDialogBuilder.show();
+        Button mRemove = (Button) listviewLayout.findViewById(R.id.removeButton);
+        mRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (arrayOfNames.size() > 0) {
+                    arrayOfNames.remove(arrayOfNames.get(arrayOfNames.size() - 1));
+                    lv.setAdapter(adapter);
+                }
+            }
+        });
+        mRemove.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mUserInput.setText("");
+                Log.d("LONG", "CLICKED");
+                arrayOfNames.clear();
+                lv.setAdapter(adapter);
+                return true;
+            }
+        });
+        Button mCancel = (Button) listviewLayout.findViewById(R.id.cancelButton);
+        mCancel.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                dialog.cancel();
+            }
+        });
+        Button mReady = (Button) listviewLayout.findViewById(R.id.readyButton);
+        mReady.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                if (adapter.getSelectedName().isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please select a team.", Toast.LENGTH_LONG).show();
+                } else {
+                    selectedName = adapter.getSelectedName();
+                    dialog.cancel();
+                }
+            }
+        });
+        dialog.show();
     }
     private void welcomeDialog(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -445,4 +533,56 @@ public class MainActivity extends Activity {
             alertDialog.show();
         }
     }
+    private void showTeams() {
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+        final AlertDialog dialog = alertDialogBuilder.create();
+        LayoutInflater inflater = getLayoutInflater();
+        View listviewLayout = inflater.inflate(R.layout.activity_teamnameselection, null);
+        dialog.setTitle("Available Games");
+        final ListView lv = (ListView) listviewLayout.findViewById(R.id.listviewts);
+        dialog.setView(listviewLayout);
+
+        teamSelectionAdapter = new TeamSelectionAdapter(MainActivity.this, arrayOfTeams);
+        lv.setAdapter(teamSelectionAdapter);
+        Button mConfirm = (Button) listviewLayout.findViewById(R.id.confirmbutton);
+        mConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*if (teamSelectionAdapter.getSelectedTeam().isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please select a name.", Toast.LENGTH_LONG).show();
+                } else {
+                    teamSelectedName = teamSelectionAdapter.getSelectedTeam();
+                    dialog.cancel();
+                }*/
+                webSourceCodeNum = teamSelectionAdapter.getPos();
+                dialog.cancel();
+                Log.d("Position", String.valueOf(webSourceCodeNum));
+            }
+        });
+        dialog.show();
+    }
 }
+/*try {
+                HttpParams httpParameters = new BasicHttpParams();
+                HttpClient httpclient = new DefaultHttpClient(httpParameters); // Create HTTP Client
+                HttpGet httpget = new HttpGet("http://yoururl.com"); // Set the action you want to do
+                HttpResponse response = httpclient.execute(httpget); // Executeit
+                HttpEntity entity = response.getEntity();
+                InputStream is = entity.getContent(); // Create an InputStream with the response
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
+                StringBuilder sbb = new StringBuilder();
+                String line = null;
+                while ((line = reader.readLine()) != null) // Read line by line
+                    sbb.append(line + "\n");
+
+                String resString = sbb.toString(); // Result is here
+
+                is.close(); // Close the stream
+            } catch (MalformedURLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+*/

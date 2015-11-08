@@ -6,7 +6,7 @@
 
     <item
         android:id="@+id/two"
-        android:title="Two"/>
+        android:title="Select Team"/>
 
     <item
         android:id="@+id/three"
@@ -14,5 +14,5 @@
 
     <item
         android:id="@+id/four"
-        android:title="Reset Table"/>
+        android:title="Reset Board"/>
 </menu>

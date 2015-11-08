@@ -13,4 +13,5 @@
         <item>Uranus</item>
         <item>Neptune</item>
     </string-array>
+    <string name="remove_message">Long press "Remove" to clear all</string>
 </resources>

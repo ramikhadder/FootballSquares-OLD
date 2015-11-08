@@ -1,75 +1,75 @@
 package com.visual.android.superbowlsquares;
 
-
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 /**
- * Created by Rami on 10/5/2015.
+ * Created by Rami on 10/9/2015.
  */
-public class CustomAdapter extends ArrayAdapter<Names>{
+public class TeamSelectionAdapter extends ArrayAdapter<TeamNames> {
 
-    private ArrayList<Names> items;
+    private ArrayList<TeamNames> items;
     private TextView tvHolder;
-    private String selectedName = "";
     private Boolean ready = false;
+    private int pos = 0;
+    private String selectedTeam = "";
+    private View positionClicked;
 
-    public CustomAdapter (Context context, ArrayList<Names> items){
+    public TeamSelectionAdapter(Context context, ArrayList<TeamNames> items) {
         super(context, 0, items);
         this.items = items;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        Names names = getItem(position);
-        if(convertView == null)
-        {
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        TeamNames tNames = getItem(position);
+        if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_namechoices, parent, false);
 
         }
-        Names nm = items.get(position);
-        if (nm != null){
+        TeamNames tm = items.get(position);
+        if (tm != null) {
             final TextView tv = (TextView)convertView.findViewById(R.id.nameItem);
-            tv.setOnClickListener(new View.OnClickListener() {
+            tv.setOnClickListener(  new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (tvHolder != null) {
                         ready = true;
-                        tvHolder.setBackgroundColor(Color.TRANSPARENT);
-                        //tvHolder.setBackgroundColor(Color.WHITE);
+                        tvHolder.setBackgroundColor(Color.WHITE);
                         v.setBackgroundColor(Color.RED);
                         tvHolder = tv;
-                        selectedName = tv.getText().toString();
-                        System.out.println(selectedName);
+                        selectedTeam = tv.getText().toString();
+                        positionClicked = v;
+                        pos = position;
                     } else {
                         ready = true;
                         v.setBackgroundColor(Color.RED);
                         tvHolder = tv;
-                        selectedName = tv.getText().toString();
-                        System.out.println(selectedName);
+                        selectedTeam = tv.getText().toString();
+                        positionClicked = v;
+                        pos = position;
                     }
                 }
             });
         }
         TextView tv = (TextView)convertView.findViewById(R.id.nameItem);
-        tv.setText(names.name);
+        tv.setText(tNames.teamName);
         return convertView;
     }
-
-    public String getSelectedName(){
-        return selectedName;
+    public String getSelectedTeam(){
+        return selectedTeam;
     }
-    public Boolean getReady() {
-        return ready;
+    public View getSelectedView(){
+        return positionClicked;
+    }
+    public int getPos(){
+        return pos;
     }
 }

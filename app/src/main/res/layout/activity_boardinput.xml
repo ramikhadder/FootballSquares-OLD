@@ -6,21 +6,70 @@
         android:id="@+id/nameInput"
         android:padding="4dp"
         android:textSize="32sp"
-        android:hint="Enter participant names"
+        android:hint="Enter participant name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <Button
-        android:textSize="32sp"
-        android:id="@+id/confirm"
-        android:text="Confirm"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-        <ListView
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:layout_margin="2dp"
+            android:background="@drawable/addremovebuttons"
+            android:id="@+id/removeButton"
+            android:text="Remove"
+            android:textSize="32sp"
             android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/addremovebuttons"
+            android:textSize="32sp"
+            android:id="@+id/addButton"
+            android:text="Add"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+        <TextView
+            android:gravity="center"
+            android:text="@string/remove_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <ListView
+            android:layout_weight="2"
             android:padding="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/listview">
         </ListView>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_margin="2dp"
+            android:id="@+id/cancelButton"
+            android:textSize="32sp"
+            android:text="Cancel"
+            android:background="@drawable/addremovebuttons"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="2dp"
+            android:id="@+id/readyButton"
+            android:textSize="32sp"
+            android:text="Ready"
+            android:background="@drawable/addremovebuttons"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </LinearLayout>

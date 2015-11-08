@@ -37,7 +37,7 @@ public class BoardInput extends Activity {
         listview.setAdapter(adapter);
 
         mUserInput = (EditText) findViewById(R.id.nameInput);
-        mConfirm = (Button) findViewById(R.id.confirm);
+        mConfirm = (Button) findViewById(R.id.addButton);
         mConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
