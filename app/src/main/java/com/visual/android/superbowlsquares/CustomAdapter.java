@@ -47,13 +47,13 @@ public class CustomAdapter extends ArrayAdapter<Names>{
                         ready = true;
                         tvHolder.setBackgroundColor(Color.TRANSPARENT);
                         //tvHolder.setBackgroundColor(Color.WHITE);
-                        v.setBackgroundColor(Color.RED);
+                        v.setBackgroundColor(Color.YELLOW);
                         tvHolder = tv;
                         selectedName = tv.getText().toString();
                         System.out.println(selectedName);
                     } else {
                         ready = true;
-                        v.setBackgroundColor(Color.RED);
+                        v.setBackgroundColor(Color.YELLOW);
                         tvHolder = tv;
                         selectedName = tv.getText().toString();
                         System.out.println(selectedName);

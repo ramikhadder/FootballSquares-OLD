@@ -5,11 +5,8 @@ package com.visual.android.superbowlsquares;
  */
 public class Names {
     public String name;
-    public Names(){
-        super();
-    }
+
     public Names(String name){
-        super();
         this.name = name;
     }
 }

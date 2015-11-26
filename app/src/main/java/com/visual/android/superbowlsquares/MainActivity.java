@@ -8,13 +8,12 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -24,15 +23,13 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -40,18 +37,9 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import android.os.Handler;
 import android.widget.Toast;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
-
-import retrofit.http.HTTP;
 
 public class MainActivity extends Activity {
 
@@ -69,36 +57,38 @@ public class MainActivity extends Activity {
     TableRow[] Rows = new TableRow[11];
     int[] mNumberRows = new int[10];
     int[] mNumberColumns = new int[10];
-    String[] spinner = new String[3];
 
     private ArrayList<Names> arrayOfNames = new ArrayList<Names>();
+    private List<String> xferNames = new ArrayList<>();
     private ArrayList<TeamNames> arrayOfTeams = new ArrayList<>();
+    private List<String> xferTeams = new ArrayList<>();
     private TeamSelectionAdapter teamSelectionAdapter;
     private CustomAdapter adapter;
-    private BoardInput bi;
 
     private Random rand, rando;
 
     private EditText mUserInput;
-    private Button mConfirm;
-    private Button mReady;
-    private String selectedName, updateWSC, teamSelectedName;
+    private String selectedName;
 
-    private String webSourceCode, x, y, teamNameOne, teamNameTwo, checkBoxResult;
-    private int int1, int2, int3, int4, x1, y1, keyword1, keyword2;
+    private String webSourceCode, checkBoxResult;
     private CheckBox checkBox;
     private static final String PREFS_NAME = "MyPrefsFile1";
 
     private int count = 0;
     private int webSourceCodeNum = 0;
 
-    private Boolean checkTeams = true;
+    private List<String> bufferTeamNames = new ArrayList<>();
+
+    private Boolean displayInput = true;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //dfor (int i = 0; i < 3; i++){ arrayOfNames.add(new Names(""));}
+
+        welcomeDialog();
+
         initializeInfo();
 
         //create a handler in an activity or fragment
@@ -121,13 +111,14 @@ public class MainActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         //adapter = new CustomAdapter(MainActivity.this, arrayOfNames);
-                        v.setBackgroundColor(Color.WHITE);
+                        //v.setBackgroundColor(Color.WHITE);
                         TextView t = (TextView) v;
                         t.setText(selectedName);
                     }
                 });
             }
         }
+
         mReset = (Button)findViewById(R.id.reset);
         mReset.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,29 +132,37 @@ public class MainActivity extends Activity {
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
-                       if (item.getTitle().equals("Board Setup")){
+                        if (item.getTitle().equals("Setup Board")){
                             setUpBoard();
-                       }
-                       if (item.getTitle().equals("Select Team")){
-                           showTeams();
-                           Toast.makeText(MainActivity.this, "Does nothing yet", Toast.LENGTH_SHORT).show();
-                       }
-                       if (item.getTitle().equals("Show Team Positions")){
-                           if (teamNameOne == null && teamNameTwo == null){
-                               Toast.makeText(getApplicationContext(), "No games found in the current week.",
-                                       Toast.LENGTH_LONG).show();
-                           }
-                           else {
-                               Toast.makeText(getApplicationContext(), teamNameOne + " (Row) vs. " + teamNameTwo + " (Column)",
-                                       Toast.LENGTH_LONG).show();
-                           }
-                       }
-                       if (item.getTitle().equals("Reset Board")){
-                           clearBoard();
-                           resetWinner();
-                           shuffleNumbers();
-                           setNumbers();
-                       }
+                        }
+                        if (item.getTitle().equals("Select Game")){
+                            showTeams();
+                        }
+                        if (item.getTitle().equals("Show Team Positions")){
+                            String teamNameOne = "";
+                            String teamNameTwo = "";
+                            if (!bufferTeamNames.isEmpty()) {
+                                teamNameOne = bufferTeamNames.get((2 * webSourceCodeNum));
+                                teamNameTwo = bufferTeamNames.get((2 * webSourceCodeNum) + 1);
+                            }
+                            if ((teamNameOne.equals("") && teamNameTwo.equals(""))){
+                                Toast.makeText(getApplicationContext(), "No games found in the current week.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                Toast.makeText(getApplicationContext(), teamNameOne + " (Row) vs. " + teamNameTwo + " (Column)",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        if (item.getTitle().equals("Reset Board")){
+                            clearBoard();
+                            resetWinner();
+                            shuffleNumbers();
+                            setNumbers();
+                        }
+                        if (item.getTitle().equals("How to Play")){
+                            howToPlay();
+                        }
                         return true;
                     }
                 });
@@ -189,11 +188,7 @@ public class MainActivity extends Activity {
     private void setNumbers(){
         for (int i = 0; i < 10; i++){
             Row_One_Column[i].setText(String.valueOf(mNumberRows[i]));
-            Row_One_Column[i].setTextSize(32);
-            Row_One_Column[i].setGravity(Gravity.CENTER);
             Column_One_Row[i].setText(String.valueOf(mNumberColumns[i]));
-            Column_One_Row[i].setTextSize(32);
-            Column_One_Row[i].setGravity(Gravity.CENTER);
         }
     }
     private void clearBoard(){
@@ -251,6 +246,7 @@ public class MainActivity extends Activity {
     private boolean isNumeric(String s){
         return s.matches("[-+]?\\d*\\.?\\d+");
     }
+
     private class MyAsyncTask extends AsyncTask<Void, Void, List<Integer>> {
         protected List<Integer> doInBackground(Void... params) {
             StringBuilder sb = new StringBuilder();
@@ -276,105 +272,103 @@ public class MainActivity extends Activity {
             List<Integer> scores = new ArrayList<Integer>();
             //Keywords for score
             String str1 = "<td class=\"finalScore\">";
-            String str2 = "</td></tr><tr class=\"teamInfo homeTeam\">";
-            String str3 = "</td></tr></table></span>";
+            String str2 = ")</td><td class=\"gameOdds\">";
             String str4 = "</td><td class=\"teamLabel\">";
-            String str5 = "class=\"scoreBox spanCol2\">";
-            String str6 = "<table width=\"100%\" class=\"gameLeaders\">";
 
-            keyword1 = webSourceCode.indexOf(str5)+str5.length();
-            keyword2 = webSourceCode.indexOf(str6);
-            String updateWSC = webSourceCode;
-            ///int d = 0;
-            while (checkTeams = true){
-                Log.d("keyword1", String.valueOf(keyword1-str5.length()));
-                Log.d("keyword2", String.valueOf(keyword2));
-                if ((keyword1-str5.length() != -1 && keyword2 != -1) && (keyword2 > keyword1)){
-                    Log.d("Accepted", "keywords");
-                    arrayOfTeams.add(new TeamNames(updateWSC.substring(keyword1,keyword2)));
-                    updateWSC = webSourceCode.substring(keyword2);
-                    keyword1 = updateWSC.indexOf(str5)+str5.length();
-                    keyword2 = updateWSC.indexOf(str6);
-                    //d++;
-                }
-                /*else{
-                    if (d == 0) {
-                        Log.d("Denied", "keywords");
-                        arrayOfTeams.clear();
-                        updateWSC = webSourceCode;
-                        keyword1 = webSourceCode.indexOf(str5) + str5.length();
-                        keyword2 = webSourceCode.indexOf(str6);
-                        break;
-                    }
-                }
-                break;*/
-            }
-            if (!arrayOfTeams.isEmpty()){
-                webSourceCode = arrayOfTeams.get(webSourceCodeNum).toString();
-            }
-            //location of scores
-            int1 = webSourceCode.indexOf(str1)+str1.length();
-            int2 = webSourceCode.indexOf(str2);
-            int3 = webSourceCode.indexOf(str4)+str4.length();
-            //String x is the first team's score
-            if (int2 < int1){
-                scores.add(0);
-                scores.add(0);
-                return scores;
-            }
-            x = webSourceCode.substring(int1,int2);
-
-            teamNameOne = "";
-            int zz = teamNameOne.indexOf("<");
-            for(int i = 0; zz == -1; i++){
-                teamNameOne = webSourceCode.substring(int3, int3 + i);
-                zz = teamNameOne.indexOf("<");
-            }
-            teamNameOne = teamNameOne.substring(0, teamNameOne.length()-1);
-            Log.d("Team Name", teamNameOne.substring(0, teamNameOne.length()-1));
-
-            teamNameTwo = "";
-            int z = teamNameTwo.indexOf("<");
-            for(int i = 0; z == -1; i++){
-                teamNameTwo = webSourceCode.substring(int3 + teamNameOne.length()+str4.length(), int3 +teamNameOne.length()+str4.length() + i);
-                z = teamNameTwo.indexOf("<");
-            }
-            teamNameTwo = teamNameTwo.substring(0, teamNameTwo.length()-1);
-            Log.d("Team Name Two", teamNameTwo.substring(0, teamNameTwo.length()));
-
-            //checking to make sure that x is a number
-            if (isNumeric(x) == true) {
-                x1 = Integer.valueOf(x);
-            }
-            else{
-                x1 = 0;
-            }
-            //I did this to eliminate lots of the source code, so when I index from left->right
-            //it doesn't hit the first score instead, rather it hits the second score
-            webSourceCode = webSourceCode.substring(int2);
-
-            //relocation of scores
-            int1 = webSourceCode.indexOf(str1)+str1.length();
-            int2 = webSourceCode.indexOf(str3);
-            //String y is the second team's score
-            y = webSourceCode.substring(int1, int2);
-            //checking to make sure that y is a number
-            if (isNumeric(y) == true) {
-                y1 = Integer.valueOf(y);
-            }
-            else{
-                y1 = 0;
-            }
             try {
-                Thread.sleep(5000);
+                Log.d("Sleep", "sleep");
+                Thread.sleep(2500);
             }
             catch (InterruptedException e){
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+
+            arrayOfTeams.clear();
+            bufferTeamNames = new ArrayList<>();
+            int test = 0;
+            int start = 0;
+            while (true) {
+                int found = webSourceCode.indexOf(str4, start);
+                if (found != -1) {
+                    String teamName = "";
+                    int zz = teamName.indexOf("<");
+                    for(int i = 0; zz == -1; i++){
+                        teamName = webSourceCode.substring(found+str4.length(), found+str4.length() + i);
+                        zz = teamName.indexOf("<");
+                    }
+                    if (!teamName.contains("'") && !teamName.equals("")){
+                        teamName = teamName.substring(0, teamName.length() - 1);
+                        //Log.d("Team Name: ", teamName);
+                        bufferTeamNames.add(teamName);
+                        test++;
+                        if (test%2 == 0){
+                            //System.out.println(bufferTeamNames.get(test-2) + " vs. " + bufferTeamNames.get(test-1));
+                            arrayOfTeams.add(new TeamNames(bufferTeamNames.get(test-2) + " vs. " + bufferTeamNames.get(test-1)));
+                        }
+                    }
+                    else {
+                        Log.d("Error(name)", "contains ' or empty");
+                    }
+
+                }
+                if (found == -1) {
+                    break;
+                }
+                start = found + 2;  // move start up for next iteration
+            }
+            List<Integer> scoree = new ArrayList<>();
+            start = 0;
+            int mStart = 0;
+            while (true) {
+                int found = webSourceCode.indexOf(str1, start);
+                int mFound = webSourceCode.indexOf(str2, mStart);
+                if (mFound == -1){
+                    mFound = found+1;
+                }
+                if (found < mFound) {
+                    if (found != -1) {
+                        String score = "";
+                        int zz = score.indexOf("<");
+                        for (int i = 0; zz == -1; i++) {
+                            score = webSourceCode.substring(found + str1.length(), found + str1.length() + i);
+                            zz = score.indexOf("<");
+                        }
+                        if (!score.contains("'") && !score.equals("")) {
+                            score = score.substring(0, score.length() - 1);
+                            Log.d("score", score);
+                            if (Integer.valueOf(score) != null) {
+                                scoree.add(Integer.valueOf(score));
+                            }
+                        } else {
+                            Log.d("Error(score)", "contains ' or empty");
+                        }
+                    }
+                    if (found == -1) break;
+                    start = found + 2;  // move start up for next iteration
+                }
+                else{
+                    if (mFound != -1) {
+                        scoree.add(0);
+                        scoree.add(0);
+                        Log.d("score", "0");
+                        Log.d("score", "0");
+                    }
+                    mStart = mFound + 2;  // move start up for next iteration
+                }
+            }
+
             //adding both scores to a listarray
-            scores.add(x1);
-            scores.add(y1);
+            if (scoree.size() > (2*webSourceCodeNum) && !scoree.isEmpty()) {
+                Log.d("Added", "allowed");
+                scores.add(scoree.get((2 * webSourceCodeNum)));
+                scores.add(scoree.get((2 * webSourceCodeNum) + 1));
+            }
+            else{
+                Log.d("Added", "declined");
+                scores.add(0);
+                scores.add(0);
+            }
             return scores;
         }
         protected void onPostExecute(List<Integer> listScore) {
@@ -393,13 +387,6 @@ public class MainActivity extends Activity {
                 Log.d("Are they equal?", "false");
                 clearOldWinner();
                 showWinner();
-            }
-            try {
-                Thread.sleep(5000);
-            }
-            catch (InterruptedException e){
-                // TODO Auto-generated catch block
-                e.printStackTrace();
             }
             //recursion
             count++;
@@ -438,7 +425,9 @@ public class MainActivity extends Activity {
         View listviewLayout = inflater.inflate(R.layout.activity_boardinput, null);
         dialog.setTitle("Board Set-up");
         final ListView lv = (ListView) listviewLayout.findViewById(R.id.listview);
+        final TextView empty = (TextView) listviewLayout.findViewById(R.id.emptyelement);
         dialog.setView(listviewLayout);
+        lv.setEmptyView(empty);
 
         adapter = new CustomAdapter(MainActivity.this, arrayOfNames);
         lv.setAdapter(adapter);
@@ -447,7 +436,6 @@ public class MainActivity extends Activity {
         mConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //names.add(mUserInput.getText().toString());
                 if (mUserInput.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "Please enter a name.",
                             Toast.LENGTH_SHORT).show();
@@ -487,15 +475,17 @@ public class MainActivity extends Activity {
                 dialog.cancel();
             }
         });
+
         Button mReady = (Button) listviewLayout.findViewById(R.id.readyButton);
         mReady.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 if (adapter.getSelectedName().isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Please select a team.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Please select a name.", Toast.LENGTH_SHORT).show();
                 } else {
                     selectedName = adapter.getSelectedName();
                     dialog.cancel();
+                    Toast.makeText(MainActivity.this, "Click any box to input the name.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -508,12 +498,18 @@ public class MainActivity extends Activity {
         checkBox = (CheckBox)welcomeLayout.findViewById(R.id.dontShow);
         alertDialogBuilder.setView(welcomeLayout);
         alertDialogBuilder.setTitle("Welcome to Football Squares!");
-        alertDialogBuilder.setMessage("Click the button to display the teams and their respective axis.\nLong press the button " +
-                "to reset the table and generate new axis numbers.");
+        String test = "<b>Click the \"+\" button to see more options</b>";
+        TextView mWelcomeText = (TextView) welcomeLayout.findViewById(R.id.welcomeText);
+        mWelcomeText.setText(Html.fromHtml(test) + "\n\n\u2022 \"Setup Board\" to enter everyone's names onto the board."
+                + "\n\u2022 \"Select Game\" allows you to choose which Football game to use scores from.\n\u2022 \"Team Position\" will display which team is on the row and which is on the column."
+                + "\n\u2022 Lastly, \"Reset Board\" will clear all names and generate new numbers for the row and column\n\nNeed more help? Click \"How to Play.\"");//
+        /*alertDialogBuilder.setMessage(Html.fromHtml(test) + "\n\n\u2022 \"Setup Board\" to enter everyone's names onto the board."
+                + "\n\u2022 \"Select Game\" allows you to choose which Football game to use scores from.\n\u2022 \"Team Position\" will display which team is on the row and which is on the column."
+                + "\n\u2022 Lastly, \"Reset Board\" will clear all names and generate new numbers for the row and column\n\nNeed more help? Click \"How to Play.\"");//*/
         checkBoxResult = "NOT checked";
         alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                if (checkBox.isChecked()){
+                if (checkBox.isChecked()) {
                     Log.d("Check", "is checked");
                     checkBoxResult = "checked";
                     SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
@@ -540,6 +536,8 @@ public class MainActivity extends Activity {
         View listviewLayout = inflater.inflate(R.layout.activity_teamnameselection, null);
         dialog.setTitle("Available Games");
         final ListView lv = (ListView) listviewLayout.findViewById(R.id.listviewts);
+        final TextView empty = (TextView) listviewLayout.findViewById(R.id.emptyelement);
+        lv.setEmptyView(empty);
         dialog.setView(listviewLayout);
 
         teamSelectionAdapter = new TeamSelectionAdapter(MainActivity.this, arrayOfTeams);
@@ -548,12 +546,6 @@ public class MainActivity extends Activity {
         mConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*if (teamSelectionAdapter.getSelectedTeam().isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Please select a name.", Toast.LENGTH_LONG).show();
-                } else {
-                    teamSelectedName = teamSelectionAdapter.getSelectedTeam();
-                    dialog.cancel();
-                }*/
                 webSourceCodeNum = teamSelectionAdapter.getPos();
                 dialog.cancel();
                 Log.d("Position", String.valueOf(webSourceCodeNum));
@@ -561,28 +553,40 @@ public class MainActivity extends Activity {
         });
         dialog.show();
     }
-}
-/*try {
-                HttpParams httpParameters = new BasicHttpParams();
-                HttpClient httpclient = new DefaultHttpClient(httpParameters); // Create HTTP Client
-                HttpGet httpget = new HttpGet("http://yoururl.com"); // Set the action you want to do
-                HttpResponse response = httpclient.execute(httpget); // Executeit
-                HttpEntity entity = response.getEntity();
-                InputStream is = entity.getContent(); // Create an InputStream with the response
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
-                StringBuilder sbb = new StringBuilder();
-                String line = null;
-                while ((line = reader.readLine()) != null) // Read line by line
-                    sbb.append(line + "\n");
-
-                String resString = sbb.toString(); // Result is here
-
-                is.close(); // Close the stream
-            } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+    private void howToPlay(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+        alertDialogBuilder.setPositiveButton("Got it!", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
             }
-*/
+        });
+        AlertDialog dialog = alertDialogBuilder.create();
+        LayoutInflater inflater = getLayoutInflater();
+        View listviewLayout = inflater.inflate(R.layout.testhtp2, null);
+        dialog.setTitle("How to Play");
+        dialog.setView(listviewLayout);
+        TextView mIntro = (TextView) listviewLayout.findViewById(R.id.intro);
+        mIntro.setText("Grab your friends and family and decide on a game to track from the \"Select Game\" option in the drop-down menu." +
+                " All the games listed are the games from the current week, regardless of whether or not they happened or will happen." +
+                " Next, click use the \"Setup Board\" option to enter participant names. There are 100 squares so it's recommended to split them equally to have a fair game.");
+        TextView mTextOne = (TextView) listviewLayout.findViewById(R.id.text1);
+        mTextOne.setText("The numbers in the row and column are randomly generated, ranging from 0 to 9. The numbers correspond to the " +
+                "last digit of the football score. The row and the column are assigned to each football team. To see which team belongs to which"
+                + "click on \"Show Team Positions\" in the drop-down menu.");
+        TextView mTextTwo = (TextView) listviewLayout.findViewById(R.id.text2);
+        mTextTwo.setText("Using the last digits of both scores, the picture below demonstrates how the winner is chosen.");
+
+        dialog.show();
+    }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        for (int i = 0; i < arrayOfNames.size(); i++){
+            //xferNames.add(arrayOfNames.get(i));
+
+            Names test = arrayOfNames.get(i);
+            //savedInstanceState.putString("test", test);
+        }
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+}

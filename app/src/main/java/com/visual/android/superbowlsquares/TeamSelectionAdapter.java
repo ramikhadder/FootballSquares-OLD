@@ -42,15 +42,15 @@ public class TeamSelectionAdapter extends ArrayAdapter<TeamNames> {
                 public void onClick(View v) {
                     if (tvHolder != null) {
                         ready = true;
-                        tvHolder.setBackgroundColor(Color.WHITE);
-                        v.setBackgroundColor(Color.RED);
+                        tvHolder.setBackgroundColor(Color.TRANSPARENT);
+                        v.setBackgroundColor(Color.YELLOW);
                         tvHolder = tv;
                         selectedTeam = tv.getText().toString();
                         positionClicked = v;
                         pos = position;
                     } else {
                         ready = true;
-                        v.setBackgroundColor(Color.RED);
+                        v.setBackgroundColor(Color.YELLOW);
                         tvHolder = tv;
                         selectedTeam = tv.getText().toString();
                         positionClicked = v;
@@ -62,12 +62,6 @@ public class TeamSelectionAdapter extends ArrayAdapter<TeamNames> {
         TextView tv = (TextView)convertView.findViewById(R.id.nameItem);
         tv.setText(tNames.teamName);
         return convertView;
-    }
-    public String getSelectedTeam(){
-        return selectedTeam;
-    }
-    public View getSelectedView(){
-        return positionClicked;
     }
     public int getPos(){
         return pos;
