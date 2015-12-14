@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
         android:id="@+id/one"
-        android:title="Setup Board"/>
-
+        android:title="Select Game"/>
     <item
         android:id="@+id/two"
-        android:title="Select Game"/>
-
+        android:title="Add Names"/>
     <item
         android:id="@+id/three"
+        android:title="Setup Board"/>
+    <item
+        android:id="@+id/four"
         android:title="Show Team Positions"/>
 
     <item
-        android:id="@+id/four"
+        android:id="@+id/five"
         android:title="Reset Board"/>
 
     <item
-        android:id="@+id/five"
+        android:id="@+id/six"
         android:title="How to Play"/>
+    <item
+        android:id="@+id/seven"
+        android:title="Share Game"/>
+    <item
+        android:id="@+id/eight"
+        android:title="Report Bug"/>
 </menu>

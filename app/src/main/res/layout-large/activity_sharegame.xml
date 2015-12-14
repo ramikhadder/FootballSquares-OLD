@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_marginBottom="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:gravity="center"
+            android:padding="16dp"
+            android:textSize="42dp"
+            android:text="Share/Receive Game"
+            android:background="@color/metalblue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:padding="16dp"
+            android:minWidth="0dp"
+            android:id="@+id/backbutton"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:textSize="42dp"
+            android:background="@drawable/addremovebuttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:textIsSelectable="true"
+        android:id="@+id/shareText"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:textSize="42dp"
+        android:text="If Sharing: Your Code Here"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/receiveText"
+        android:layout_marginBottom="100dp"
+        android:gravity="center"
+        android:textSize="42dp"
+        android:hint="If Receiving: Type Code Here"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:gravity="bottom"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="1dp"
+            android:background="@drawable/addremovebuttons"
+            android:id="@+id/receive"
+            android:paddingTop="40dp"
+            android:paddingBottom="40dp"
+            android:textSize="42dp"
+            android:textAllCaps="false"
+            android:text="Receive Game"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/addremovebuttons"
+            android:id="@+id/share"
+            android:paddingTop="40dp"
+            android:paddingBottom="40dp"
+            android:textSize="42dp"
+            android:textAllCaps="false"
+            android:text="Share Game"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>

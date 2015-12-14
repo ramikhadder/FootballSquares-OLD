@@ -9,37 +9,28 @@
         android:text="Select A Game"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/activity_main_swipe_refresh_layout"
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_weight="1"
+        android:id="@+id/activity_main_swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <ListView
+            android:padding="4dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ListView
-                android:padding="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/listviewts">
-            </ListView>
-            <ScrollView
-                android:id="@+id/emptyscroll"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:gravity="center|top"
-                    android:padding="4dp"
-                    android:text="No games found.\n(Swipe down to refresh)"
-                    android:textSize="20dp"
-                    android:id="@+id/emptyelement"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </ScrollView>
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:id="@+id/listviewts">
+        </ListView>
     </android.support.v4.widget.SwipeRefreshLayout>
-
+    <TextView
+        android:layout_weight="1"
+        android:gravity="center|top"
+        android:padding="4dp"
+        android:text="No games found."
+        android:textSize="22dp"
+        android:id="@+id/emptyelement"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -48,7 +39,7 @@
             android:layout_marginLeft="2dp"
             android:layout_marginRight="1dp"
             android:textAllCaps="false"
-            android:textSize="22dp"
+            android:textSize="20dp"
             android:background="@drawable/addremovebuttons"
             android:id="@+id/receiveButton"
             android:layout_weight="1"
@@ -59,7 +50,7 @@
             android:layout_marginRight="2dp"
             android:layout_marginLeft="1dp"
             android:textAllCaps="false"
-            android:textSize="22dp"
+            android:textSize="20dp"
             android:background="@drawable/addremovebuttons"
             android:id="@+id/confirmbutton"
             android:layout_weight="1"
@@ -67,4 +58,5 @@
             android:layout_height="wrap_content"
             android:text="Confirm"/>
     </LinearLayout>
+
 </LinearLayout>

@@ -4,6 +4,7 @@ package com.visual.android.superbowlsquares;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,27 +18,28 @@ import java.util.ArrayList;
 /**
  * Created by Rami on 10/5/2015.
  */
-public class CustomAdapter extends ArrayAdapter<Names>{
+public class CustomAdapter extends ArrayAdapter<String>{
 
-    private ArrayList<Names> items;
+    private ArrayList<String> items;
     private TextView tvHolder;
     private String selectedName = "";
     private Boolean ready = false;
 
-    public CustomAdapter (Context context, ArrayList<Names> items){
+    public CustomAdapter (Context context, ArrayList<String> items){
         super(context, 0, items);
         this.items = items;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Names names = getItem(position);
+        String name = getItem(position);
+        Log.d("nameone", name);
         if(convertView == null)
         {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_namechoices, parent, false);
-
         }
-        Names nm = items.get(position);
+        String nm = items.get(position);
+        Log.d("namefour", nm);
         if (nm != null){
             final TextView tv = (TextView)convertView.findViewById(R.id.nameItem);
             tv.setOnClickListener(new View.OnClickListener() {
@@ -50,19 +52,19 @@ public class CustomAdapter extends ArrayAdapter<Names>{
                         v.setBackgroundColor(Color.YELLOW);
                         tvHolder = tv;
                         selectedName = tv.getText().toString();
-                        System.out.println(selectedName);
+                        Log.d("nametwo", selectedName);
                     } else {
                         ready = true;
                         v.setBackgroundColor(Color.YELLOW);
                         tvHolder = tv;
                         selectedName = tv.getText().toString();
-                        System.out.println(selectedName);
+                        Log.d("namethree", selectedName);
                     }
                 }
             });
         }
         TextView tv = (TextView)convertView.findViewById(R.id.nameItem);
-        tv.setText(names.name);
+        tv.setText(name);
         return convertView;
     }
 

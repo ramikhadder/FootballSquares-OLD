@@ -13,5 +13,14 @@
         <item>Uranus</item>
         <item>Neptune</item>
     </string-array>
+
+    <string name="htpTextOne">Grab your friends and family and decide on a game to track from the \"Select Game\" option in the drop-down menu.
+        All the games listed are the games from the current week, regardless of whether or not they happened or will happen.
+        Next, click use the \"Setup Board\" option to enter participant names. There are 100 squares so it\'s recommended to split them equally to have a fair game."</string>
+    <string name="htpTextTwo">The numbers in the row and column are randomly generated, ranging from 0 to 9. The numbers correspond to the
+        last digit of the football score. The row and the column are assigned to each football team. To see which team belongs to which
+        click on "Show Team Positions" in the drop-down menu.</string>
+    <string name="htpTextThree">Using the last digits of both scores, the picture below demonstrates how the winner is chosen.</string>
+
     <string name="remove_message">Long press "Remove" to clear all</string>
 </resources>

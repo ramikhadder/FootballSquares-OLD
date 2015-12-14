@@ -13,28 +13,28 @@ import java.util.ArrayList;
 /**
  * Created by Rami on 10/9/2015.
  */
-public class TeamSelectionAdapter extends ArrayAdapter<TeamNames> {
+public class TeamSelectionAdapter extends ArrayAdapter<String> {
 
-    private ArrayList<TeamNames> items;
+    private ArrayList<String> items;
     private TextView tvHolder;
-    private Boolean ready = false;
+    public Boolean ready = false;
     private int pos = 0;
     private String selectedTeam = "";
     private View positionClicked;
 
-    public TeamSelectionAdapter(Context context, ArrayList<TeamNames> items) {
+    public TeamSelectionAdapter(Context context, ArrayList<String> items) {
         super(context, 0, items);
         this.items = items;
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        TeamNames tNames = getItem(position);
+        String tNames = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_namechoices, parent, false);
 
         }
-        TeamNames tm = items.get(position);
+        String tm = items.get(position);
         if (tm != null) {
             final TextView tv = (TextView)convertView.findViewById(R.id.nameItem);
             tv.setOnClickListener(  new View.OnClickListener() {
@@ -60,10 +60,13 @@ public class TeamSelectionAdapter extends ArrayAdapter<TeamNames> {
             });
         }
         TextView tv = (TextView)convertView.findViewById(R.id.nameItem);
-        tv.setText(tNames.teamName);
+        tv.setText(tNames);
         return convertView;
     }
     public int getPos(){
         return pos;
+    }
+    public Boolean getReady(){
+        return ready;
     }
 }
