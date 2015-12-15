@@ -26,7 +26,10 @@ import java.util.Date;
 public class SplashScreen extends Activity {
 
     private ArrayList<String> arrayOfTeams = new ArrayList<>();
-    Parse parse = new Parse();
+    private ArrayList<Integer> arrayOfScores = new ArrayList<>();
+    private ArrayList<String> arrayOfTeamVersus = new ArrayList<>();
+    private String webSourceCode;
+    //Parse parse = new Parse();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,22 +74,36 @@ public class SplashScreen extends Activity {
             return webSourceCode;
         }
 
-        protected void onPostExecute(String webCode) {
+        protected void onPostExecute(final String webCode) {
 
-            final String webSoureceCode = webCode;
+            webSourceCode = webCode;
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+
+                    GameData gameData = new GameData(webCode);
+                    arrayOfTeams = gameData.getTeamNames();
+                    arrayOfScores = gameData.getTeamScores();
+                    arrayOfTeamVersus = gameData.getArrayOfTeamVersus();
+
                     Log.d("TeamSelection", "AsyncTaskSurvived");
-                    arrayOfTeams = parse.getTeamNames(webSoureceCode);
-                    Intent i = new Intent(SplashScreen.this, TeamSelection.class);
+                    //arrayOfTeams = parse.getTeamNames(webSoureceCode);
+                    Intent i = new Intent(SplashScreen.this, GameSelection.class);
                     i.putExtra("ClassName", "SplashScreen");
+                    i.putExtra("SOURCE", webCode);
+                    i.putStringArrayListExtra("ARRAY_VERSUS", arrayOfTeamVersus);
                     i.putStringArrayListExtra("ARRAY_TEAMS", arrayOfTeams);
+                    i.putIntegerArrayListExtra("ARRAY_SCORES", arrayOfScores);
                     findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                     startActivity(i);
                     finish();
                 }
             }, 1200);
         }
+    }//AsyncTask end
+
+    public String getWebSourceCode(){
+        return webSourceCode;
     }
-}
+
+}//class end
